@@ -1,6 +1,6 @@
-
 import sympy
 from sympy.ntheory import sqrt_mod
+from sympy.ntheory.modular import crt # Import crt specifically
 from math import ceil
 
 # --- KHỞI TẠO KHÓA ---
@@ -25,9 +25,9 @@ def rabin_decrypt(c, p, q):
     roots = []
     for rp in r:
         for sq in s:
-            x = sympy.crt([p, q], [rp, sq])
+            x = crt([p, q], [rp, sq])
             if x is not None:
-                roots.append(x % n)
+                roots.append(x[0] % n)
     return list(set(roots))
 
 # --- HỖ TRỢ CHUỖI DÀI ---
@@ -68,7 +68,9 @@ def decrypt_long_text(encrypted_blocks, p, q, block_size):
 n, (p, q) = rabin_generate_keys()
 block_size = 2  # 2 byte = 16 bit = số < 65536, an toàn với n > 100000
 
-text = "Xin chào, đây là hệ mã Rabin với padding!"
+# text = "Don't Fuckin Bark If You Can't Fuckin Bite." 
+# text = "Xin chào, đây là hệ mã Rabin với padding!"
+text = "Your remuneration is not proportional to your labor, but proportional to your irreplaceable labor."
 print("Original:", text)
 
 cipher_blocks = encrypt_long_text(text, n, block_size)
