@@ -6,11 +6,11 @@ def rabin_generate_keys():
     p = sympy.nextprime(100)
     while p % 4 != 3:
         p = sympy.nextprime(p)
-    
+
     q = sympy.nextprime(p + 1)
     while q % 4 != 3:
         q = sympy.nextprime(q)
-    
+
     n = p * q
     return n, (p, q)
 
@@ -25,9 +25,10 @@ def rabin_decrypt(c, p, q):
     for rp in r:
         for sq in s:
             # Use the imported crt function directly
-            x = crt([p, q], [rp, sq]) 
+            x = crt([p, q], [rp, sq])
             if x is not None:
-                roots.append(x % n)
+                # Extract the first element (the solution) from the tuple returned by crt
+                roots.append(x[0] % n)
     return list(set(roots))
 
 # --- CHUYỂN ĐỔI GIỮA CHUỖI VÀ SỐ ---
