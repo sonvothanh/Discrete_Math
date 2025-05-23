@@ -1,5 +1,6 @@
 import sympy
 from sympy.ntheory import sqrt_mod
+from sympy.ntheory.modular import crt # Import crt specifically
 
 def rabin_generate_keys():
     p = sympy.nextprime(100)
@@ -23,7 +24,8 @@ def rabin_decrypt(c, p, q):
     roots = []
     for rp in r:
         for sq in s:
-            x = sympy.crt([p, q], [rp, sq])
+            # Use the imported crt function directly
+            x = crt([p, q], [rp, sq]) 
             if x is not None:
                 roots.append(x % n)
     return list(set(roots))
