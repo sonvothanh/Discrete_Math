@@ -1,3 +1,5 @@
+Coins_Arranging.py
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/ca55b824-68e1-45ed-964e-8849620b46af" />
 
 ---
 
