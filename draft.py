@@ -30,18 +30,14 @@ class RotationAnimation(ThreeDScene):
         title_static_part = MathTex(r"\text{Rotation angle } \theta = ")
         title_static_part.to_edge(UP)
         title = VGroup(title_static_part, theta_value_text)
-        title.arrange(RIGHT)
-        title.to_edge(UP)
-
-        # Make the angle tracker follow the theta value
-        theta_value_text.add_updater(lambda m: m.set_value(theta_tracker.get_value()))
-
-        self.add(axes, cube)
-        self.add_fixed_in_frame_mobjects(title_static_part, theta_value_text) # .renderer.camera.
-        # self.add(title_static_part, theta_value_text)
-
-        self.wait()
-
+        
+        def update_title(group):
+            group[1].next_to(group[0],RIGHT)
+            group[1].set_value(theta_tracker.get_value())
+            self.add_fixed_in_frame_mobjects(group)
+        
+        title.add_updater(update_title)
+        self.add(title,axes, cube)
         self.play(
             Rotate(cube, angle=90 * DEGREES, axis=OUT, about_point=ORIGIN, run_time=4),
             theta_tracker.animate.set_value(90),
